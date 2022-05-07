@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6i0d(cixz-u*y4vc3j_z)k!)_tl5&lyv=#-^+0ihd!m@n@5@t-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'API_web', 
-    'rest_framework'
+    'rest_framework', 
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': 
+        ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 ROOT_URLCONF = 'WebAPI.urls'
 
