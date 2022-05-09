@@ -39,7 +39,7 @@ class getAction(generics.ListAPIView):
     queryset = request_action.objects.all()
     filter_backend = [DjangoFilterBackend]
     # filterset_class = actionFilter
-    filterset_fields = ['isStatus', 'ip_addr']
+    filterset_fields = ['isStatus']
 
 #using API VIEW
 class listData(APIView):
@@ -53,7 +53,7 @@ class listData(APIView):
         return Response(serializer.data)
     
     def post(self, request, format=None):
-        serializer = ComputerSerializer(data= request.data)
+        serializer = ComputerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

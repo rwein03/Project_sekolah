@@ -1,0 +1,39 @@
+{% load static %}
+
+<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+      <a href="{% url 'index' %}" class="navbar-brand">
+          <img src="{% static 'img/paper.png' %}" alt="" width="40" height="40" class="d-inline-block align-text-top">
+          SINOM(Aplikasi Anonimisasi Putusan)
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                  <a href="{% url 'kasus:index' %}" class="nav-link"><i class="bi bi-house-door"></i> HOME</a>
+              </li>
+              <li>
+                <a href="{% url 'kasus:list' %}" class="nav-link"><i class="bi bi-briefcase"></i> PERKARA</a>
+              </li>
+              <li>
+                <a href="" class="nav-link"><i class="bi bi-person-workspace"></i> ABOUT</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'kasus:settings' user.id %}" class="nav-link"><i class="bi bi-gear"></i> SETTINGS</a>
+              </li>
+              <li>
+                <a href="{% url 'logout' %}" class="nav-link"><i class="bi bi-door-closed"></i> LOGOUT</a>
+              </li>
+              {% else %}
+              <li>
+                <a href="{% url 'index' %}" class="nav-link"><i class="bi bi-door-open"></i> LOGIN</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>

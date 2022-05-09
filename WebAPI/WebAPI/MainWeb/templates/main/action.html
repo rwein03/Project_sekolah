@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    MAIN APPS
+{% endblock title %}
+
+{% block contents %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="row p-1">
+                {% for field in form %}
+                    <div class="form-group p-2">
+                        {{field.label}}
+                        {{field}}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary" id="createButton">ADD</button>
+            </div>
+        </div>
+    </form>
+    {% for data in data %}
+        {{data.macaddr}}
+        {{data.ip_addr}}
+        {{data.action}}
+        {{data.isStatus}}
+    {% endfor %}
+{% endblock contents %}
+
+{% block scripts %}
+
+{% endblock scripts %}

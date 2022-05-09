@@ -4,16 +4,16 @@ import requests
 import socket
 from getmac import get_mac_address
 import subprocess
-# import multiprocessing
+import login_services
 from threading import Thread
 
 isChecking = False
 
-URL = 'http://localhost:8000/api/class'
-URL_COMPUTER_PUT = 'http://localhost:8000/api/class/'
-URL_COMPUTER_FILTER = 'http://localhost:8000/api/userfilter'
-URL_ACTION = 'http://localhost:8000/api/actionfilter'
-URL_ACTION_PUT = 'http://localhost:8000/api/action/'
+URL = 'http://192.168.1.3:8000/api/class'
+URL_COMPUTER_PUT = 'http://192.168.1.3:8000/api/class/'
+URL_COMPUTER_FILTER = 'http://192.168.1.3:8000/api/userfilter'
+URL_ACTION = 'http://192.168.1.3:8000/api/actionfilter'
+URL_ACTION_PUT = 'http://192.168.1.3:8000/api/action/'
 HEADERS = {
     'Authorization' : 'Token 348e69ca8482769f2f63b57f009ac6b37825b76d'
 }
@@ -133,10 +133,18 @@ def main():
                         ACTION_DATA['isStatus'] = True
                         proceed = put_action(checkin[0]['id'], ACTION_DATA)
                         subprocess.Popen('shutdown -s -f -t 00')
+                        
+                    if checkin[0]['action'] == 'wifi':
+                        ACTION_DATA['ip_addr'] = IP
+                        ACTION_DATA['macaddr'] = MAC
+                        ACTION_DATA['action'] = checkin[0]['action']
+                        ACTION_DATA['isStatus'] = True
+                        proceed = put_action(checkin[0]['id'], ACTION_DATA)
+                        login_services.run()
                 else:
                     print('mac tidak sama')
             else:
-                print('no action needed')
+                print('no action')
     except:
         print('Host is Died')
         

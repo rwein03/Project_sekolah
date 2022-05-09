@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    MAIN APPS
+{% endblock title %}
+
+{% block contents %}
+    <form method="POST" id="createUserForm" data-url="{% url 'Main_App:index'%}">
+        {% csrf_token %}
+        <div class="d-flex justify-content-center">
+            <div class="row p-3">
+                {% for field in form %}
+                    <div class="form-group p-2">
+
+                        {{field}}
+                    </div>
+                {% endfor %}
+            <button type="button" class="btn btn-primary" id="createButton">ADD</button>
+            </div>
+        </div>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">USER</th>
+                        <th scope="col">PASSWORD</th>
+                        <th scope="col">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="dataList" >
+                    {% for data in data %}
+                    <tr id="dataTR" data-id="{{data.id}}">
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{data.username}}</td> 
+                        <td>{{data.password}}</td> 
+                        <td>
+                            <button data-id="{{data.id}}" type="button" class="btn btn-danger" ><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </form>
+
+{% endblock contents %}
+
+{% block scripts %}
+    <script src="{% static 'main/wifi.js' %}"></script>
+{% endblock scripts %}

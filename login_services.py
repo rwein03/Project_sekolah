@@ -46,14 +46,14 @@ def run():
     try:
         if os.path.exists(JSON_FILE):
             if os.path.exists(path_file):
-                launch = login('erwinprasetya', 'melvagera', path_file)
+                launch = login('charislab', 'sfth2122', path_file)
                 save_driver = ChromeDriverManager(path=os.getcwd()).install()
                 save_json(save_driver)
                 launch.quit()
         else:
             b = ChromeDriverManager(path=os.getcwd()).install()
             save_json(b)
-            launch = login('erwinprasetya', 'melvagera', b)
+            launch = login('charislab', 'sfth2122', b)
             launch.quit()
     except:
         pass

@@ -18,13 +18,12 @@ class Computer(models.Model):
 
 class request_action(models.Model):
     macaddr = models.ForeignKey(Computer,to_field='mac_addr', on_delete=models.CASCADE)
-    ip_addr = models.CharField(max_length=50, null=True, blank=True)
     action = models.CharField(max_length=50, choices=Action_option)
     isStatus = models.BooleanField(default=False,blank=True)
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     
     def __str__(self):
-        return self.ip_addr
+        return "{}".format(self.macaddr)
 
 class userWifi(models.Model):
     username = models.CharField(max_length=50)

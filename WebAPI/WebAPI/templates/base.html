@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>
+        {% block title %}
+        {% endblock title%}
+    </title>
+    <link rel="SHORTCUT ICON" type="image/x-icon" href="{% static 'img/favicon.ico' %}"/>
+    <!-- Bootstart CSS -->
+    {% include "snippets/styles.html" %}
+    <!-- Custom CSS -->
+</head>
+<body>
+    <div class="container-fluid"">
+        <h1>
+            {% block pageTitle %}
+
+            {% endblock pageTitle %}
+        </h1>
+        {% block contents %}
+            
+        {% endblock contents %}
+    </div>
+    {% include "snippets/scripts.html" %}
+
+    {% block scripts %}
+   
+    {% endblock scripts %}
+</body>
+</html>
+
