@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% load l10n %}
+
+{% block title %}
+    MAIN APPS
+{% endblock title %}
+
+{% block contents %}
+    {% for i in data %}
+    <div class="row p-1">
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#data{{ i.ip_addr|cut:'.'|add:'-end' }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+        {{i.ip_addr}} - {{i.mac_addr}}
+        </a>
+    <div class="collapse" id="data{{ i.ip_addr|cut:'.'|add:'-end' }}">
+        <div class="card card-body">
+            <div class="input-group mb-1">
+                <form class="p-1 px-2" action="{% url 'Main_App:add_action' i.mac_addr 'wifi' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">WIFI</button>
+                </form>
+                <form class="p-1 px-2" action="{% url 'Main_App:add_action' i.mac_addr 'restart' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">RESTART</button>
+                </form>
+                <form class="p-1 px-2" action="{% url 'Main_App:add_action' i.mac_addr 'shutdown' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">SHUTDOWN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    {% endfor %}
+{% endblock contents %}
+
+{% block scripts %}
+
+{% endblock scripts %}

@@ -1,31 +1,30 @@
 from attr import fields
 from django import forms
+from django.utils.datastructures import MultiValueDict
 
 from API_web.models import userWifi, request_action
 
 class actionForm(forms.ModelForm):
+    
     class Meta:
         model = request_action
-        fields = '__all__'
+        fields = ['macaddr', 'action']
 
         labels = {
-            'isStatus' : 'Execute(?)',
             'macaddr' : 'SELECT MAC ADDRESS'
         }
         
         widgets = {
-            'macaddr' : forms.Select(
+            'macaddr' : forms.TextInput(
                 attrs={
                     'class':'form-control'
                     }
             ),
-            'action' : forms.Select(
+            'action' : forms.TextInput(
                 attrs={
                     'class':'form-control'
                     }
             ),
-            'isStatus' : forms.CheckboxInput(
-            )
         }
         
 class wifiform(forms.ModelForm):

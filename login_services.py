@@ -1,12 +1,15 @@
 import os
+from pprint import pprint
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver import ChromeOptions
 import json
 
-JSON_FILE = 'settings.json'
+FOLDER = os.path.dirname(os.path.realpath(__file__))
+JSON_FILE = os.path.join(FOLDER, 'settings.json')
 MAIN_SITE = 'http://login.charis.net'
 LOGIN_SITE = 'http://login.charis.net/login?'
+
 
 def chrome_setting(site, path):
     chrome_options = ChromeOptions()
@@ -42,16 +45,16 @@ def load_json():
     return path_file
     
 def run():
-    path_file = load_json()
     try:
         if os.path.exists(JSON_FILE):
+            path_file = load_json()
             if os.path.exists(path_file):
                 launch = login('charislab', 'sfth2122', path_file)
-                save_driver = ChromeDriverManager(path=os.getcwd()).install()
+                save_driver = ChromeDriverManager(path=FOLDER).install()
                 save_json(save_driver)
                 launch.quit()
         else:
-            b = ChromeDriverManager(path=os.getcwd()).install()
+            b = ChromeDriverManager(path=FOLDER).install()
             save_json(b)
             launch = login('charislab', 'sfth2122', b)
             launch.quit()

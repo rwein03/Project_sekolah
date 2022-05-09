@@ -1,29 +1,52 @@
-import json
-from telnetlib import STATUS
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
 
 from .forms import wifiform, actionForm
-from API_web.models import userWifi, request_action
+from API_web.models import userWifi, request_action, Computer
+
+def post_action(request, mac_addr, action):
+    a = Computer.objects.get(mac_addr=mac_addr)
+    print(a.mac_addr)
+    if request.method =='POST':
+        request_action.objects.create(
+            macaddr = a,
+            action = action
+        )
+        return HttpResponse('OK')
+    else:
+        return HttpResponse('ERROR')
+        
+
+class activView(View):
+    def get(self, request):
+        data = Computer.objects.filter(isAlive=True).values()
+        context = {
+            'data' : data
+        }
+        return render(request,'main/active.html' ,context=context)
+
+    def post(self, request, mac_addr, action):
+        a = Computer.objects.get(mac_addr=mac_addr)
+        tambah = request_action.objects.create(
+            macaddr = a,
+            action = action)
+        print(tambah)
+        return redirect('Main_App:active')
+
+        
 
 class actionView(View):
     def get(self, request):
+        data_view = request_action.objects.select_related('macaddr').all()
         form = actionForm()
-        data_view = request_action.objects.all()
         context = {
             'data' : data_view,
             'form': form
         }
-        return render(request, 'main/action.html', context=context)
-    
-    def post(self, request):
-        form = actionForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('Main_App:action')
+        return render(request, 'main/action.html', context=context)        
 
 
 class userWifiView(View):

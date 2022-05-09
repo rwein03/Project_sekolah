@@ -6,14 +6,17 @@ from getmac import get_mac_address
 import subprocess
 import login_services
 from threading import Thread
+import time
+
+DELAY_TIME = 1
 
 isChecking = False
 
-URL = 'http://192.168.1.3:8000/api/class'
-URL_COMPUTER_PUT = 'http://192.168.1.3:8000/api/class/'
-URL_COMPUTER_FILTER = 'http://192.168.1.3:8000/api/userfilter'
-URL_ACTION = 'http://192.168.1.3:8000/api/actionfilter'
-URL_ACTION_PUT = 'http://192.168.1.3:8000/api/action/'
+URL = 'http://localhost:8000/api/class'
+URL_COMPUTER_PUT = 'http://localhost:8000/api/class/'
+URL_COMPUTER_FILTER = 'http://localhost:8000/api/userfilter'
+URL_ACTION = 'http://localhost:8000/api/actionfilter'
+URL_ACTION_PUT = 'http://localhost:8000/api/action/'
 HEADERS = {
     'Authorization' : 'Token 348e69ca8482769f2f63b57f009ac6b37825b76d'
 }
@@ -39,10 +42,9 @@ MAC = ''
 def get_ip_mac():
     host = socket.gethostname()
     ip = socket.gethostbyname_ex(host)
-    # print(ip)
     local_ip = []
     for check in ip[2]:
-        if check.startswith('192.168.1.'):
+        if check.startswith('192.168.1.') or check.startswith('192.168.0.'):
             local_ip.append(check)
     ip_mac = get_mac_address(ip=local_ip[0])
     return local_ip[0], ip_mac
@@ -145,14 +147,16 @@ def main():
                     print('mac tidak sama')
             else:
                 print('no action')
+                
+            time.sleep(DELAY_TIME)
     except:
         print('Host is Died')
         
     
 
 if __name__=='__main__':
-    while True:
         th1 = Thread(target=main)
         th1.start()
         th1.join()
+        
     

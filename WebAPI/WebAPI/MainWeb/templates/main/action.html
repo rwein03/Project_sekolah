@@ -22,7 +22,7 @@
     </form>
     {% for data in data %}
         {{data.macaddr}}
-        {{data.ip_addr}}
+        {{data.macaddr.ip_addr}}
         {{data.action}}
         {{data.isStatus}}
     {% endfor %}

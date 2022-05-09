@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'API_web',
     'MainWeb',
     'rest_framework', 
-    'django_filters'
+    'django_filters',
 ]
 
 MIDDLEWARE = [
