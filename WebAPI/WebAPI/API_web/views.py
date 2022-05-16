@@ -39,7 +39,7 @@ class getAction(generics.ListAPIView):
     queryset = request_action.objects.all()
     filter_backend = [DjangoFilterBackend]
     # filterset_class = actionFilter
-    filterset_fields = ['isStatus']
+    filterset_fields = ['isStatus', 'macaddr']
 
 #using API VIEW
 class listData(APIView):

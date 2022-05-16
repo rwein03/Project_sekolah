@@ -7,31 +7,35 @@
 {% endblock title %}
 
 {% block contents %}
+<div class="row">
     {% for i in data %}
-    <div class="row p-1">
-        <a class="btn btn-primary" data-bs-toggle="collapse" href="#data{{ i.ip_addr|cut:'.'|add:'-end' }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-        {{i.ip_addr}} - {{i.mac_addr}}
-        </a>
-    <div class="collapse" id="data{{ i.ip_addr|cut:'.'|add:'-end' }}">
-        <div class="card card-body">
-            <div class="input-group mb-1">
-                <form class="p-1 px-2" action="{% url 'Main_App:add_action' i.mac_addr 'wifi' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">WIFI</button>
-                </form>
-                <form class="p-1 px-2" action="{% url 'Main_App:add_action' i.mac_addr 'restart' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">RESTART</button>
-                </form>
-                <form class="p-1 px-2" action="{% url 'Main_App:add_action' i.mac_addr 'shutdown' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">SHUTDOWN</button>
-                </form>
+    <div class="col-sm-2 mt-2">
+        <div class="card bg-light">
+            <h5 class="card-header">PC No.{{forloop.counter}}</h5>
+            <div class="card-body">
+                <p class="card-text">IP ADDRESS : {{i.ip_addr}}</p>
+                <p class="card-text">MAC : {{i.mac_addr}}</p>
+                <p class="card-text">Status : {{i.isAlive}}</p>
+                <div class="btn-group-vertical">
+                    <form class="p-1" action="{% url 'Main_App:add_action' i.mac_addr 'wifi' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">WIFI</button>
+                    </form>
+                    <form class="p-1" action="{% url 'Main_App:add_action' i.mac_addr 'restart' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">RESTART</button>
+                    </form>
+                    <form class="p-1" action="{% url 'Main_App:add_action' i.mac_addr 'shutdown' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">SHUTDOWN</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
     {% endfor %}
+</div>
+
 {% endblock contents %}
 
 {% block scripts %}
